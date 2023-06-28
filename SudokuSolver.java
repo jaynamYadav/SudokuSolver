@@ -1,6 +1,6 @@
 package sudokuproject;
 
-public class SudokSolver {
+public class SudokuSolver {
 
 	private int[][] board;
 
