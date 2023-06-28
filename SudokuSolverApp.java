@@ -55,6 +55,7 @@ public class SudokuSolverApp extends JFrame implements ActionListener {
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		
+		setTitle("Sudoku Solver");
 		setApperance();
 		pack();
 	}
@@ -84,7 +85,6 @@ public class SudokuSolverApp extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == solveButton) {
 			solveSudoku();
-			System.out.println("Solve");
 		}
 		if (e.getSource() == resetButton) {
 			for (int row = 0; row < 9; row++) {
@@ -135,7 +135,7 @@ public class SudokuSolverApp extends JFrame implements ActionListener {
 		}
 		flag = 1;
 		solver.setBoard(board);
-		if (solver.solve(board, 0, 0)) {
+		if (solver.check(board)) {
 			int[][] solution = solver.getBoard();
 			for (int row = 0; row < 9; row++) {
 				for (int col = 0; col < 9; col++) {

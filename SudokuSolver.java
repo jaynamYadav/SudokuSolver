@@ -16,6 +16,18 @@ public class SudokuSolver {
 		this.board = board;
 	}
 
+	public boolean check(int[][] reset) {
+		for (int row = 0; row < 9; row++) {
+			for (int col = 0; col < 9; col++) {
+				if (reset[row][col] != 0) {
+					if (!isSafe(reset, row, col, reset[row][col])) {
+						return false;
+					}
+				}
+			}
+		}
+		return solve(reset, 0, 0);
+	}
 	public boolean solve(int[][] board, int row, int col) {
 		if (row == 9) {
 			return true;
@@ -26,9 +38,6 @@ public class SudokuSolver {
 			nextCol = 0;
 		}
 		if (board[row][col] != 0) {
-			if (!isSafe(board, row, col, board[row][col])) {
-				return false;
-			}
 			return solve(board, nextRow, nextCol);
 		}
 		for (int digit = 1; digit <= 9; digit++) {
@@ -42,18 +51,22 @@ public class SudokuSolver {
 		return false;
 	}
 
-	private boolean isSafe(int[][] board, int row, int col, int digit) {
+	public boolean isSafe(int[][] board, int row, int col, int digit) {
+		
 		for (int i = 0; i < 9; i++) {
-			if (board[row][i] == digit)
-				return false;
-			if (board[i][col] == digit)
-				return false;
+			if (i != col)
+				if (board[row][i] == digit)
+					return false;
+			if (i != row)
+				if (board[i][col] == digit)
+					return false;
 		}
 		int sr = (row / 3) * 3, sc = (col / 3) * 3;
 		for (int i = sr; i < sr + 3; i++)
 			for (int j = sc; j < sc + 3; j++)
-				if (board[i][j] == digit)
-					return false;
+				if (i != row && j != col)
+					if (board[i][j] == digit)
+						return false;
 		return true;
 	}
 }
